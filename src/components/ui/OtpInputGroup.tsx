@@ -6,9 +6,10 @@ import { OTP_LENGTH } from '../../config/constants';
 interface OtpInputGroupProps {
   onComplete?: (code: string) => void;
   onChange?: (code: string) => void;
+  error?: boolean;
 }
 
-export function OtpInputGroup({ onComplete, onChange }: OtpInputGroupProps) {
+export function OtpInputGroup({ onComplete, onChange, error }: OtpInputGroupProps) {
   const { values, setRef, handleChange, handleKeyDown, handlePaste, otp, isComplete } = useOtpInput(OTP_LENGTH);
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export function OtpInputGroup({ onComplete, onChange }: OtpInputGroupProps) {
         <OtpInput
           key={index}
           value={value}
+          error={error}
           inputRef={setRef(index)}
           onChange={(val) => handleChange(index, val)}
           onKeyDown={(e) => handleKeyDown(index, e)}
