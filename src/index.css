@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-general: var(--bg-general);
+  --color-bg-card: var(--bg-card);
+  --color-front-primary: var(--front-primary);
+  --color-front-secondary: var(--front-secondary);
+  --color-front-tertiary: var(--front-tertiary);
+  --color-front-positive: var(--front-positive);
+  --color-accent-link: var(--accent-link);
+  --color-line-primary: var(--line-primary);
+  --color-line-disabled: var(--line-disabled);
+
+  --font-inter: 'Inter', sans-serif;
+}
+
+:root {
+  --bg-general: #f2f5f7;
+  --bg-card: #ffffff;
+  --front-primary: #1d2329;
+  --front-secondary: #7f8b99;
+  --front-tertiary: #b8c3d1;
+  --front-positive: #179958;
+  --accent-link: #5d21de;
+  --line-primary: #b8c3d1;
+  --line-disabled: #e9eff5;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --button-primary: #1d2329;
+  --button-primary-text: #ffffff;
+}
+
+.dark {
+  --bg-general: #0f1215;
+  --bg-card: #1d2329;
+  --front-primary: #f2f5f7;
+  --front-secondary: #9aa5b0;
+  --front-tertiary: #5a6570;
+  --front-positive: #22c96e;
+  --accent-link: #8b5cf6;
+  --line-primary: #3a4550;
+  --line-disabled: #2a3038;
+  --overlay: rgba(0, 0, 0, 0.7);
+  --button-primary: #f2f5f7;
+  --button-primary-text: #1d2329;
+}
+
+/* Dirham symbol font - use the npm package font files */
+@font-face {
+  font-family: 'AED';
+  src: url('data:font/woff2;charset=utf-8;base64,') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.dirham-symbol {
+  font-family: 'AED', 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-general);
+  color: var(--front-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@utility text-h1 {
+  font-size: 35px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: -0.7px;
+}
+
+@utility text-h2 {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-h3 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.22px;
+}
+
+@utility text-h4 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+}
+
+@utility text-body1 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+}
+
+@utility text-body1-bold {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+}
+
+@utility text-body2 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.16px;
+}
+
+@utility text-caption {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.13px;
+}
+
+/* Animations */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-skeleton {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes checkmark-draw {
+  0% { stroke-dashoffset: 48; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes checkmark-circle-pop {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-spin-slow {
+  animation: spin 1s linear infinite;
+}
+
+.animate-skeleton {
+  animation: pulse-skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.checkmark-path {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: checkmark-draw 0.6s ease-out 0.3s forwards;
+}
+
+.checkmark-circle {
+  animation: checkmark-circle-pop 0.5s ease-out forwards;
+}
