@@ -46,7 +46,7 @@
 
 /* Dirham symbol font from new-dirham-symbol package */
 @font-face {
-  font-family: 'UAESymbol';
+  font-family: 'AED';
   src: url('/uae-symbol.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -54,25 +54,21 @@
 }
 
 .dirham-symbol {
-  font-family: 'UAESymbol', 'Inter', sans-serif;
+  font-family: 'AED', 'Inter', sans-serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@layer base {
+  html, body, #root {
+    height: 100%;
+  }
 
-html, body, #root {
-  height: 100%;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-general);
-  color: var(--front-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-general);
+    color: var(--front-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 @utility text-h1 {

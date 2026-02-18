@@ -7,7 +7,7 @@ export function Header() {
   const { state } = useCheckout();
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 w-full">
+    <header className="bg-[var(--bg-card)] flex items-center justify-between px-4 sm:px-6 py-4 w-full">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-[var(--front-primary)] flex items-center justify-center overflow-hidden shrink-0">
           <span className="text-[var(--bg-card)] font-bold text-[14px]">
