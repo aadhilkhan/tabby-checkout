@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# Tabby Checkout
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A pixel-perfect replica of the [Tabby](https://tabby.ai) Buy Now, Pay Later checkout flow — built as a standalone React prototype for rapid design iteration.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8) ![Vite](https://img.shields.io/badge/Vite-6-646cff)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screens
 
-## React Compiler
+| OTP Verification | Plan Selection | Payment | Success |
+|:---:|:---:|:---:|:---:|
+| Auto-advancing OTP input with countdown timer | Split pay in 4/6/8/10/12 with fee breakdown | Card selection, cashback toggle, plan summary | Animated checkmark with redirect |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Flow
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+OTP  →  Plan Selection  →  Payment  →  Success
+              ↓                ↓
+       Repayment Schedule   Payment Method
+           (modal)             (modal)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Vite** + **React 19** + **TypeScript**
+- **Tailwind CSS v4** with custom design tokens
+- **React Router v6** for screen navigation
+- **Framer Motion** for page transitions and modal animations
+- **Inter** font (400–700) via Google Fonts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
 ```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── screens/        # OTP, Plan Selection, Payment, Success
+│   ├── modals/         # Repayment Schedule, Payment Method
+│   ├── ui/             # Button, Chip, OTP Input, Toggle, Badge, etc.
+│   └── layout/         # Header, Card, CheckoutLayout
+├── context/            # Checkout state + Theme (dark mode)
+├── hooks/              # useCountdown, useOtpInput, useMediaQuery
+├── lib/                # Installment calculations, currency formatting
+├── config/             # Routes, constants, mock data
+└── assets/icons/       # SVG icon components
+```
+
+## Features
+
+- **Split payment plans** — Pay in 4 (0%), 6 (5%), 8 (9%), 10 (13%), or 12 (17%)
+- **OTP verification** — Auto-focus, auto-advance, paste support, resend timer
+- **Repayment schedule** — Visual timeline with payment dates and amounts
+- **Dark mode** — Full theme toggle with `localStorage` persistence
+- **Responsive** — Desktop card layout + mobile full-width
+- **Skeleton loaders** — Smooth loading states on screen transitions
+- **UAE Dirham symbol** — Custom font for the new Unicode glyph (`U+00EA`)
+
+## Design Tokens
+
+Colors, typography, and spacing follow the Tabby design system. See [CLAUDE.md](CLAUDE.md) for the full token reference.
+
+## License
+
+Private — for design prototyping purposes only.
