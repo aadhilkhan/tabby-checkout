@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OtpInputGroup } from '../ui/OtpInputGroup';
 import { PhonePill } from '../ui/PhonePill';
@@ -17,14 +17,18 @@ export function OtpScreen() {
   const { formatted, isExpired, restart } = useCountdown(OTP_COUNTDOWN_SECONDS);
   const [otpValue, setOtpValue] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const [otpError, setOtpError] = useState(false);
+  const [error, setError] = useState('');
+  const errorRef = useRef('');
 
   const isComplete = otpValue.length === 4;
 
-  const handleOtpChange = (code: string) => {
-    setOtpValue(code);
-    if (otpError) setOtpError(false);
-  };
+  const handleOtpChange = useCallback((value: string) => {
+    setOtpValue(value);
+    if (errorRef.current) {
+      errorRef.current = '';
+      setError('');
+    }
+  }, []);
 
   const handleContinue = async () => {
     if (!isComplete) return;
@@ -32,11 +36,14 @@ export function OtpScreen() {
     dispatch({ type: 'SET_OTP', payload: otpValue });
     // Simulate verification delay
     await new Promise((resolve) => setTimeout(resolve, 800));
+
     if (otpValue !== VALID_OTP) {
-      setOtpError(true);
+      errorRef.current = 'Incorrect code. Please try again.';
+      setError('Incorrect code. Please try again.');
       setIsVerifying(false);
       return;
     }
+
     dispatch({ type: 'VERIFY_OTP' });
     setIsVerifying(false);
     navigate(ROUTES.PLAN);
@@ -56,14 +63,13 @@ export function OtpScreen() {
       <div className="px-8 pb-5 flex flex-col gap-4">
         <OtpInputGroup
           onChange={handleOtpChange}
-          onComplete={handleOtpChange}
-          error={otpError}
+          onComplete={(code) => handleOtpChange(code)}
+          hasError={!!error}
         />
-        {otpError ? (
-          <p className="text-body2 text-red-500">
-            Incorrect code. Please try again.
-          </p>
-        ) : isExpired ? (
+        {error && (
+          <p className="text-body2 text-[#ef4444]">{error}</p>
+        )}
+        {isExpired ? (
           <button
             onClick={restart}
             className="text-body2 text-[var(--accent-link)] cursor-pointer bg-transparent border-none text-left hover:underline p-0"
