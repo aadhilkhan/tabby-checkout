@@ -44,17 +44,17 @@
   --button-primary-text: #1d2329;
 }
 
-/* Dirham symbol font - use the npm package font files */
+/* Dirham symbol font from new-dirham-symbol package */
 @font-face {
-  font-family: 'AED';
-  src: url('data:font/woff2;charset=utf-8;base64,') format('woff2');
+  font-family: 'UAESymbol';
+  src: url('/uae-symbol.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 .dirham-symbol {
-  font-family: 'AED', 'Inter', sans-serif;
+  font-family: 'UAESymbol', 'Inter', sans-serif;
 }
 
 * {
