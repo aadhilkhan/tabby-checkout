@@ -9,14 +9,22 @@ import { useCheckout } from '../../context/CheckoutContext';
 import { ROUTES } from '../../config/routes';
 import { OTP_COUNTDOWN_SECONDS } from '../../config/constants';
 
+const VALID_OTP = '8888';
+
 export function OtpScreen() {
   const navigate = useNavigate();
   const { state, dispatch } = useCheckout();
   const { formatted, isExpired, restart } = useCountdown(OTP_COUNTDOWN_SECONDS);
   const [otpValue, setOtpValue] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
+  const [otpError, setOtpError] = useState(false);
 
   const isComplete = otpValue.length === 4;
+
+  const handleOtpChange = (code: string) => {
+    setOtpValue(code);
+    if (otpError) setOtpError(false);
+  };
 
   const handleContinue = async () => {
     if (!isComplete) return;
@@ -24,6 +32,11 @@ export function OtpScreen() {
     dispatch({ type: 'SET_OTP', payload: otpValue });
     // Simulate verification delay
     await new Promise((resolve) => setTimeout(resolve, 800));
+    if (otpValue !== VALID_OTP) {
+      setOtpError(true);
+      setIsVerifying(false);
+      return;
+    }
     dispatch({ type: 'VERIFY_OTP' });
     setIsVerifying(false);
     navigate(ROUTES.PLAN);
@@ -42,10 +55,15 @@ export function OtpScreen() {
 
       <div className="px-8 pb-5 flex flex-col gap-4">
         <OtpInputGroup
-          onChange={setOtpValue}
-          onComplete={(code) => setOtpValue(code)}
+          onChange={handleOtpChange}
+          onComplete={handleOtpChange}
+          error={otpError}
         />
-        {isExpired ? (
+        {otpError ? (
+          <p className="text-body2 text-red-500">
+            Incorrect code. Please try again.
+          </p>
+        ) : isExpired ? (
           <button
             onClick={restart}
             className="text-body2 text-[var(--accent-link)] cursor-pointer bg-transparent border-none text-left hover:underline p-0"
